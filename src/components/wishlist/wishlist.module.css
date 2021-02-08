@@ -1,0 +1,17 @@
+.Root {
+    display: flex;
+    justify-content: center;
+}
+
+.Droppable {
+    background-color: #ffad58;
+    padding: 4;
+    width: 30vw;
+    height: fit-content;
+}
+
+.Draggable {
+    user-select: none;
+    padding-top: 16;
+    margin: 0, 0, 8px, 0;
+}

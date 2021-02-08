@@ -1,0 +1,12 @@
+.NewGiftButton {
+    color: darkgrey;
+    border-radius: 5%;
+    width: 5cm;
+    height: 5cm;
+    font-size: 80px;
+}
+
+.NewGiftButton:hover {
+    opacity: 70%;
+    cursor: pointer;
+}
