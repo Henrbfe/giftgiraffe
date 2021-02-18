@@ -1,18 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import Styling from './giftInputPopUp.module.css';
 import firebase from '../../firebase.config'
 
 
-export default function GiftInputPopUp() {
+export default function GiftInputPopUp({ hidden, togglePopUp, receiver }) {
 
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
     const [imageAsFile, setImageAsFile] = useState('')
-    const [showPopUp, setShowPopUp] = useState(true)
+
+    const [giftInfo, setGiftInfo] = useState({
+        title: '',
+        description: '',
+        price: 0,
+    })
+
+    console.log(`Receiver: ${receiver}`)
+
 
     const closePopUp = (event) => {
         event.preventDefault()
-        setShowPopUp(false)
+        togglePopUp()
+    }
+
+    const handleValueChange = event => {
+        event.preventDefault()
+        const { name, value } = event.target
+        setGiftInfo( prevState => ({
+            ...prevState,
+            [name]: value
+        }))
     }
 
     const handleImageAsFile = (event) => {
@@ -24,7 +39,7 @@ export default function GiftInputPopUp() {
         event.preventDefault()
         if(imageAsFile === '' ) {
             console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
-          }
+        }
         const uploadTask = firebase.storage().ref(`/images/${imageAsFile.name}`).put(imageAsFile)
         uploadTask.on('state_changed',
         (snapShot) => {
@@ -36,45 +51,64 @@ export default function GiftInputPopUp() {
             .then(firebaseUrl => {
                 firebase
                 .firestore()
-                .collection('gifts')
+                .collection('/gifts')
                 .add({
-                    title,
-                    description,
-                    imageUrl: firebaseUrl
+                    title: giftInfo.title,
+                    description: giftInfo.description,
+                    price: giftInfo.price,
+                    imageUrl: firebaseUrl,
+                    creator: firebase.auth().currentUser.uid,
+                    receiver: receiver
                 })
                 .then(() => {
-                    setTitle('')
-                    setDescription('')
+                    setGiftInfo({
+                        title: '',
+                        description: '',
+                        price: 0,
+                    })
                     setImageAsFile('')
+                    togglePopUp()
                 })
             })
         })
     }
 
     return (
-        <div className={Styling.Root} hidden={!showPopUp}>
-            <form className={Styling.Form}>
-                <button className={Styling.CloseButton} onClick={closePopUp}>
+        <div className={Styling.Root} hidden={hidden}>
+            <button className={Styling.CloseButton} onClick={closePopUp}>
                     x
-                </button>
+            </button>
+            <form className={Styling.Form}>
                 <span className={Styling.Header}>Add new gift</span>
-                <label className={Styling.Input}>
-                    Title:
-                    <input type="text" value={title} onChange={e => setTitle(e.currentTarget.value)}/>
-                </label>
-                <label className={Styling.Input}>
-                    Description: 
-                    <input type="text" value={description} onChange={e => setDescription(e.currentTarget.value)}/>
-                </label>
-                <label className={Styling.Input}>
-                    Bilde: 
-                    <input type="file" onChange={handleImageAsFile}/>
-                </label>
+                <input
+                    className={Styling.Input}
+                    placeholder='Title'
+                    type="text"
+                    name='title'
+                    value={giftInfo.title}
+                    onChange={handleValueChange}/>
+                <input
+                    className={Styling.Input}
+                    placeholder='Description'
+                    type="text"
+                    name='description'
+                    value={giftInfo.description}
+                    onChange={handleValueChange}/>
+                <input
+                    className={Styling.Input}
+                    placeholder='Price'
+                    type="number"
+                    name='price'
+                    value={giftInfo.price}
+                    onChange={handleValueChange}/>
+                <input
+                    className={Styling.Input}
+                    type="file"
+                    onChange={handleImageAsFile}/>
                 <button className={Styling.SubmitButton} onClick={submitGift}>
                     Submit
                 </button>
             </form>
         </div>
     )
-
 }

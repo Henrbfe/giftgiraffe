@@ -1,0 +1,22 @@
+.Root {
+    position: relative;
+    top: 2cm;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Header {
+    font-size: 60px;
+}
+
+.IconContainer {
+    width: 40%;
+    height: 40%;
+}
+
+.Icon {
+    width: 100%;
+    height: auto;
+}

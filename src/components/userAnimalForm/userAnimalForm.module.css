@@ -1,0 +1,54 @@
+.Icon {
+    width: 1cm;
+    height: auto;
+}
+
+.Root {
+    position: relative;
+    left: 35%;
+    top: 3cm;
+    height: 20cm;
+    width: 30%;
+    background-color: #ffad58;
+    border-radius: 5%;
+    border: 8px solid #2b1d0e;
+}
+
+.Form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 100%;
+}
+
+.Header {
+    font-size: 36px;
+    text-decoration: underline;
+}
+
+.Input {
+    height: 1cm;
+    width: 70%;
+    font-size: 28px;
+}
+
+.SelectLabel {
+    font-size: 20px;
+}
+
+.Select {
+    width: 3cm;
+    height: auto;
+}
+
+.Button {
+    color: white;
+    font-size: 32px;
+    background-color: #2b1d0e;
+    width: 150px;
+    height: 50px;
+    border-radius: 5%;
+    cursor: pointer;
+}

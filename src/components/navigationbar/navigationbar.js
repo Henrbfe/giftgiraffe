@@ -1,10 +1,10 @@
 import React from "react";
 import { ButtonBase, makeStyles, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import GiraffePicture from '../../pictures/giraffe-icon.png';
-import GiftPicture from '../../pictures/gift-icon.png';
-import SettingsPicture from '../../pictures/settings-icon.png';
-import WishlistPicture from '../../pictures/wishlist-icon.png';
+import GiraffePicture from '../../pictures/navbar_icons/giraffe-icon.png';
+import GiftPicture from '../../pictures/navbar_icons/gift-icon.png';
+import SettingsPicture from '../../pictures/navbar_icons/settings-icon.png';
+import WishlistPicture from '../../pictures/navbar_icons/wishlist-icon.png';
 
 
 const images = [

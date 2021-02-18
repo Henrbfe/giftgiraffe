@@ -1,0 +1,30 @@
+.Button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #84592b;
+    border-radius: 100%;
+    width: 6cm;
+    height: 6cm;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.Button:hover {
+    cursor: pointer;
+    border: 8px solid #2b1d0e;
+}
+
+.Icon {
+    width: 60%;
+    height: auto;
+}
+
+.Namebox {
+    background-color: #ffad58;
+    width: 60%;
+    height: 30px;
+    font-size: 25px;
+    color: black;
+}

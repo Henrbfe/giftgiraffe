@@ -1,24 +1,29 @@
 import React from 'react';
 import Styling from './giftCard.module.css';
+import { Draggable } from 'react-beautiful-dnd'
 
-export default function GiftCard({gift, dragRef, provDragProps, provHandleProps}) {
+export default function GiftCard({gift, index}) {
 
     return(
-        <div
-            className={Styling.Root}
-            ref={dragRef}
-            provDragProps
-            provHandleProps>
-            <span className={Styling.Header}>
-                {gift.title}
-            </span>
-            <img 
-                className={Styling.Image}
-                src={gift.imageUrl}
-                alt="Gift"/>
-            <button className={Styling.Button}>
-                Edit
-            </button>
-        </div>
+        <Draggable draggableId={gift.title} index={index}>
+            {provided => (
+            <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                className={Styling.Root}>
+                <span className={Styling.Header}>
+                    {gift.title}
+                </span>
+                <img 
+                    className={Styling.Image}
+                    src={gift.imageUrl}
+                    alt="Gift"/>
+                <button className={Styling.Button}>
+                    Edit
+                </button>
+            </div>
+            )}
+        </Draggable>
     );
 }

@@ -1,63 +1,45 @@
 import React, { useState, useEffect } from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import GiftCard from '../giftCard/giftCard'
 import firebase from '../../firebase.config'
-import Styling from './wishlist.module.css'
+import GiftOverview from '../giftOverview/giftOverview'
 
 export default function Wishlist() {
 
     const [gifts, setGifts] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const unsubscribe =
-        firebase.firestore().collection('gifts')
+        firebase.firestore().collection('/gifts')
+        .where('creator', '==', firebase.auth().currentUser.uid)
+        .where('receiver', '==', firebase.auth().currentUser.uid)
         .onSnapshot((snapshot) => {
+            setIsLoading(true)
             const newGifts = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
             }))
             setGifts(newGifts)
+            setIsLoading(false)
         })
         return () => unsubscribe()
     }, [])
 
-    return (
-        <div className={Styling.Root}>
-            <DragDropContext onDropEnd={result => console.log(result)}>
-                <Droppable droppableId={"1"}>
-                    {(provided, snapshot) => {
-                        return (
-                            <div
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                                className={Styling.Droppable}>
-                                {gifts.map((gift, index) => {
-                                    return (
-                                        <Draggable
-                                            key={gift.title}
-                                            draggableId={gift.title}
-                                            index={index}>
-                                            {(provided, snapshot) => {
-                                                return (
-                                                    <GiftCard
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                        styl={{
-                                                            userSelect: 'none',
-                                                            ...provided.draggableProps.style
-                                                        }}
-                                                    />
-                                                )
-                                            }}
-                                        </Draggable>
-                                    )
-                                })}
-                            </div>
-                        )
-                    }}
-                </Droppable>
-            </DragDropContext>
-        </div>
-    )
+    useEffect(() => {
+        console.log(`isLoading: ${isLoading}`)
+    }, [isLoading])
+
+    useEffect(() => {
+        console.log(`Updated gifts: ${gifts}`)
+    }, [gifts])
+
+    if (isLoading) {
+        return (
+            <span>Loading...</span>
+        )
+    }
+    else {
+        return (
+            <GiftOverview initalGifts={gifts} />
+        )
+    }
 }

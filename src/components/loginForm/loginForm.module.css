@@ -1,0 +1,28 @@
+.Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.Header {
+    font-size: 50px;
+}
+
+.Input {
+    height: 1cm;
+    width: 70%;
+    font-size: 28px;
+}
+
+.Button {
+    color: white;
+    font-size: 32px;
+    background-color: #2b1d0e;
+    width: 150px;
+    height: 50px;
+    border-radius: 5%;
+    cursor: pointer;
+}

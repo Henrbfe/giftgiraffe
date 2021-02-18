@@ -1,8 +1,16 @@
 .Root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.HeaderBox {
     height: 3cm;
+    width: 100%;
     background-color: #2b1d0e;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -14,12 +22,12 @@
 
 .Button {
     position: relative;
-    left: 2cm;
-    height: 1cm;
-    width: 1cm;
-    background-color: #ffad58;
-    color: #2b1d0e;
-    border-radius: 10%;
+    top: 10cm;
+    height: 2cm;
+    width: 5cm;
+    background-color: #2b1d0e;
+    color: white;
+    border-radius: 5%;
     font-size: 28px;
 }
 
